@@ -43,40 +43,27 @@ int main()
     fd_set master;
     FD_ZERO(&master);
 
-    // Add our first socket that we're interested in interacting with; the listening socket!
-    // It's important that this socket is added for our server or else we won't 'hear' incoming
-    // connections
+    // Add the first socket as listening
     FD_SET(listening, &master);
 
-    // this will be changed by the \quit command (see below, bonus not in video!)
+    // this will be changed by the \quit command below, which can bbe sent from client to server - Remember the \
+
     bool running = true;
 
     while (running)
     {
-        // Make a copy of the master file descriptor set, this is SUPER important because
-        // the call to select() is _DESTRUCTIVE_. The copy only contains the sockets that
-        // are accepting inbound connection requests OR messages.
-
-        // E.g. You have a server and it's master file descriptor set contains 5 items;
-        // the listening socket and four clients. When you pass this set into select(),
-        // only the sockets that are interacting with the server are returned. Let's say
-        // only one client is sending a message at that time. The contents of 'copy' will
-        // be one socket. You will have LOST all the other sockets.
-
-        // SO MAKE A COPY OF THE MASTER LIST TO PASS INTO select() !!!
-
         fd_set copy = master;
 
-        // See who's talking to us
+        //Amount of sockets
         int socketCount = select(0, &copy, nullptr, nullptr, nullptr);
 
-        // Loop through all the current connections / potential connect
+        // Loop through all the current connections / potential connections
         for (int i = 0; i < socketCount; i++)
         {
-            // Makes things easy for us doing this assignment
+            // Copy socket object from array
             SOCKET sock = copy.fd_array[i];
 
-            // Is it an inbound communication?
+            // Is it an incoming connection?
             if (sock == listening)
             {
                 // Accept a new connection
@@ -89,7 +76,7 @@ int main()
                 string welcomeMsg = "Welcome to the motherfucking only server that works!\r\n";
                 send(client, welcomeMsg.c_str(), welcomeMsg.size() + 1, 0);
             }
-            else // It's an inbound message
+            else // It's an incoming message
             {
                 char buf[4096];
                 ZeroMemory(buf, 4096);
@@ -99,7 +86,7 @@ int main()
 
                 if (bytesIn <= 0)
                 {
-                    // Drop the client
+                    // close socket if not receiving anything
                     printf("Dropping client");
                     closesocket(sock);
                     FD_CLR(sock, &master);
@@ -118,11 +105,11 @@ int main()
                             break;
                         }
 
-                        // Unknown command
+                        // Put other commands here
                         continue;
                     }
 
-                    // Send message to other clients, and definitely NOT the listening socket
+                    // Send message to other clients, and NOT the listening socket
 
                     for (int i = 0; i < master.fd_count; i++)
                     {
@@ -141,12 +128,12 @@ int main()
         }
     }
 
-    // Remove the listening socket from the master file descriptor set and close it
+    // Remove the listening socket from the master file descriptor and close it
     // to prevent anyone else trying to connect.
     FD_CLR(listening, &master);
     closesocket(listening);
 
-    // Message to let users know what's happening.
+    // Message to let users know if shutting down.
     string msg = "Server is shutting down. Goodbye\r\n";
 
     while (master.fd_count > 0)
