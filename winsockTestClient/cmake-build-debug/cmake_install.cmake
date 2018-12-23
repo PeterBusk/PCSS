@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/pbusk/CLionProjects/MiniProject_PCSS/winsockTestClient2
+# Install script for directory: C:/Users/pbusk/CLionProjects/PCSS/winsockTestClient
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/pbusk/CLionProjects/MiniProject_PCSS/winsockTestClient2/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/pbusk/CLionProjects/PCSS/winsockTestClient/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/pbusk/CLionProjects/SingleThreadServerTest/main.cpp
+C:/Users/pbusk/CLionProjects/PCSS/SingleThreadServerTest/main.cpp
 iostream
 -
 WS2tcpip.h

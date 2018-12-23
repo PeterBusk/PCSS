@@ -86,7 +86,7 @@ int main()
                 FD_SET(client, &master);
 
                 // Send a welcome message to the connected client
-                string welcomeMsg = "Welcome to the Awesome Chat Server!\r\n";
+                string welcomeMsg = "Welcome to the motherfucking only server that works!\r\n";
                 send(client, welcomeMsg.c_str(), welcomeMsg.size() + 1, 0);
             }
             else // It's an inbound message
