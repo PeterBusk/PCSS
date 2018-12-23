@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/pbusk/CLionProjects/SingleThreadServerTest/main.cpp
+iostream
+-
+WS2tcpip.h
+-
+string
+-
+sstream
+-
+
